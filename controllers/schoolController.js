@@ -36,10 +36,16 @@ exports.addSchool = async (req, res) => {
     res.status(201).json({ 
       message: 'School added successfully',
       school: { name, address, latitude: lat, longitude: lng }
+    });  } catch (error) {
+    console.error('Database error details:', {
+      message: error.message,
+      code: error.code,
+      stack: error.stack
     });
-  } catch (error) {
-    console.error('Database error:', error);
-    res.status(500).json({ error: 'Failed to add school to database' });
+    res.status(500).json({ 
+      error: 'Failed to add school to database',
+      details: error.message 
+    });
   }
 };
 
