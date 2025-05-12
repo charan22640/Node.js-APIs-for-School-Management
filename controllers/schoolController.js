@@ -3,6 +3,7 @@ const haversine = require('haversine-distance');
 
 // Add a school
 exports.addSchool = async (req, res) => {
+  console.log('Received POST request with body:', req.body);
   const { name, address, latitude, longitude } = req.body;
 
   // Enhanced validation
@@ -25,9 +26,13 @@ exports.addSchool = async (req, res) => {
   if (isNaN(lng) || lng < -180 || lng > 180) {
     return res.status(400).json({ error: 'Longitude must be a valid number between -180 and 180' });
   }
-
   try {
     await School.create({ name, address, latitude: lat, longitude: lng });
+    console.log('\n=== New School Added Successfully ===');
+    console.log(`Name: ${name}`);
+    console.log(`Address: ${address}`);
+    console.log(`Location: ${lat}, ${lng}`);
+    console.log('====================================\n');
     res.status(201).json({ 
       message: 'School added successfully',
       school: { name, address, latitude: lat, longitude: lng }
