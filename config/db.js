@@ -1,10 +1,11 @@
 const mysql = require('mysql2/promise');
 
 const pool = mysql.createPool({
-  host: process.env.MYSQLHOST || process.env.DB_HOST,
-  user: process.env.MYSQLUSER || process.env.DB_USER,
-  password: process.env.MYSQLPASSWORD || process.env.DB_PASSWORD,
-  database: process.env.MYSQLDATABASE || process.env.DB_NAME,
+  host: 'nozomi.proxy.rlwy.net',
+  user: 'root',
+  password: process.env.DB_PASSWORD, // We'll set this in Railway's environment variables
+  database: 'railway',
+  port: 32331,
   ssl: {
     rejectUnauthorized: true
   }
