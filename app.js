@@ -28,9 +28,25 @@ app.use((err, req, res, next) => {
 
 // Start server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`API endpoints:`);
   console.log(`- POST /api/schools - Add a new school`);
   console.log(`- GET /api/schools?latitude=xx&longitude=yy - List schools by proximity`);
+});
+
+// Handle shutdown gracefully
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT signal received: closing HTTP server');
+  server.close(() => {
+    console.log('HTTP server closed');
+    process.exit(0);
+  });
 });
