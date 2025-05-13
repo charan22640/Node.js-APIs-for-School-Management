@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 const schoolRoutes = require('./routes/schoolRoutes');
+const db = require('./config/db');
 
 // Middleware
 app.use(express.json());
@@ -36,17 +37,20 @@ const server = app.listen(PORT, () => {
 });
 
 // Handle shutdown gracefully
-process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: closing HTTP server');
+process.on('SIGTERM', async () => {
+  console.log('SIGTERM received. Closing HTTP server and DB connections...');
+  await db.end();
   server.close(() => {
-    console.log('HTTP server closed');
+    console.log('Server and DB connections closed.');
+    process.exit(0);
   });
 });
 
-process.on('SIGINT', () => {
-  console.log('SIGINT signal received: closing HTTP server');
+process.on('SIGINT', async () => {
+  console.log('SIGINT received. Closing HTTP server and DB connections...');
+  await db.end();
   server.close(() => {
-    console.log('HTTP server closed');
+    console.log('Server and DB connections closed.');
     process.exit(0);
   });
 });
