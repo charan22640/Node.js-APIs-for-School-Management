@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "36185db5-894c-4df2-bcba-0abae8b530a2",
+		"name": "School Management API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37746700"
+	},
+	"item": [
+		{
+			"name": "Add New School",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Delhi Public School\",\n    \"address\": \"123 Main Street, Delhi\",\n    \"latitude\": 28.6139,\n    \"longitude\": 77.2090\n}"
+				},
+				"url": {
+					"raw": "https://nodejs-apis-for-school-management-production.up.railway.app/api/schools",
+					"protocol": "https",
+					"host": ["nodejs-apis-for-school-management-production", "up", "railway", "app"],
+					"path": ["api", "schools"]
+				},
+				"description": "Add a new school with validation for all fields"
+			},
+			"response": []
+		},
+		{
+			"name": "List Schools by Distance",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://nodejs-apis-for-school-management-production.up.railway.app/api/schools?latitude=28.6139&longitude=77.2090",
+					"protocol": "https",
+					"host": ["nodejs-apis-for-school-management-production", "up", "railway", "app"],
+					"path": ["api", "schools"],
+					"query": [
+						{
+							"key": "latitude",
+							"value": "28.6139"
+						},
+						{
+							"key": "longitude",
+							"value": "77.2090"
+						}
+					]
+				},
+				"description": "Get all schools sorted by distance from given coordinates"
+			},
+			"response": []
+		}
+	]
+}
